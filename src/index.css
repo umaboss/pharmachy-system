@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dashboard Exact Theme Colors */
+
+@layer base {
+  :root {
+    /* Core Backgrounds */
+    --background: 220 23% 97%;      /* very light gray */
+    --foreground: 215 25% 20%;      /* dark text */
+
+    /* Cards */
+    --card: 0 0% 100%;              /* white cards */
+    --card-foreground: 215 25% 20%;
+
+    /* Primary Green (same as screenshot) */
+    --primary: 152 62% 33%;         /* #1F7C47  ✅ exact green */
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 152 40% 55%;   /* lighter green shade */
+    --primary-dark: 152 65% 25%;    /* darker green shade */
+
+    /* Secondary (gray/blue accents like sidebar & boxes) */
+    --secondary: 210 40% 96%;       /* #F3F6F9 light blue/gray */
+    --secondary-foreground: 210 15% 25%;
+
+    /* Accent Blue (used in tasks/tags) */
+    --accent: 200 90% 55%;          /* #2CA6E2 */
+    --accent-foreground: 0 0% 100%;
+
+    /* Muted */
+    --muted: 210 20% 95%;
+    --muted-foreground: 210 15% 45%;
+
+    /* Status Colors */
+    --success: 152 62% 33%;         /* same green as primary */
+    --warning: 38 92% 50%;          /* amber */
+    --destructive: 0 94% 74%;       /* red */
+
+    /* Interface */
+    --border: 214 32% 91%;          /* soft border */
+    --input: 214 32% 91%;
+    --ring: 152 62% 33%;            /* green focus */
+
+    /* Shadows */
+    --shadow-soft: 0 2px 8px -2px hsl(215 25% 20% / 0.08);
+    --shadow-medium: 0 4px 16px -4px hsl(215 25% 20% / 0.12);
+    --shadow-strong: 0 8px 32px -8px hsl(215 25% 20% / 0.16);
+
+    --radius: 0.75rem;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
