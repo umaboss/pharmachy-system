@@ -313,7 +313,7 @@ const Inventory = () => {
           {/* Add Medicine Dialog */}
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
             <DialogTrigger asChild>
-              <Button variant="medical">
+              <Button className="text-white bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)] hover:opacity-90">
                 <Plus className="w-4 h-4 mr-2" />
                 Add Medicine
               </Button>
@@ -513,7 +513,7 @@ const Inventory = () => {
                 </Button>
                 <Button 
                   onClick={handleAddMedicine}
-                  className="bg-gradient-primary hover:opacity-90"
+                  className="text-white bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)] hover:opacity-90"
                 >
                   <Save className="w-4 h-4 mr-2" />
                   Add Medicine
@@ -603,7 +603,11 @@ const Inventory = () => {
                   variant={selectedCategory === category ? "default" : "outline"}
                   size="sm"
                   onClick={() => setSelectedCategory(category)}
-                  className="capitalize"
+                  className={`capitalize ${
+                    selectedCategory === category
+                      ? "text-white bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)]"
+                      : ""
+                  }`}
                 >
                   {category}
                 </Button>

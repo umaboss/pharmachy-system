@@ -25,7 +25,7 @@ import {
   Bell,
   Shield
 } from "lucide-react";
-import { useAdmin } from "@/contexts/AdminContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 const AppSidebar = () => {
   const { state } = useSidebar();
@@ -33,7 +33,8 @@ const AppSidebar = () => {
   const location = useLocation();
   const currentPath = location.pathname;
   const [isOnline, setIsOnline] = useState(true);
-  const { userRole } = useAdmin();
+  const { user } = useAuth();
+  const userRole = user?.role?.toLowerCase() || 'cashier';
 
   // Cashier items - basic POS operations
   const cashierItems = [
@@ -85,8 +86,8 @@ const AppSidebar = () => {
   const getNavCls = (url: string) => {
     const isActive = isRouteActive(url);
     return isActive
-      ? "flex items-center gap-3 px-3 py-2 rounded-md font-medium text-green-700  border-l-4 border-green-600 shadow-sm transition-all duration-200"
-      : "flex items-center gap-3 px-3 py-2 rounded-md text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-all duration-200";
+      ? "flex items-center gap-3 px-3 py-2 rounded-md font-medium text-white bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)] shadow-sm transition-all duration-200"
+      : "flex items-center gap-3 px-3 py-2 rounded-md text-gray-600 hover:bg-green-50 hover:text-green-700 transition-all duration-200";
   };
 
   return (
@@ -95,7 +96,7 @@ const AppSidebar = () => {
         {/* Header */}
         <div className={`p-4 border-b border-gray-200 ${collapsed ? "px-2" : ""}`}>
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md">
+            <div className="w-8 h-8 bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)] rounded-lg flex items-center justify-center flex-shrink-0 shadow-md">
               <Stethoscope className="w-5 h-5 text-white" />
             </div>
             {!collapsed && (
@@ -106,10 +107,10 @@ const AppSidebar = () => {
                   variant="outline" 
                   className={`text-xs mt-1 ${
                     userRole === "admin"
-                      ? "bg-purple-50 text-purple-700 border-purple-200"
+                      ? "bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)] text-white border-transparent"
                       : userRole === "manager"
-                      ? "bg-blue-50 text-blue-700 border-blue-200"
-                      : "bg-green-50 text-green-700 border-green-200"
+                      ? "bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)] text-white border-transparent"
+                      : "bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)] text-white border-transparent"
                   }`}
                 >
                   {userRole === "admin"
@@ -145,8 +146,8 @@ const AppSidebar = () => {
               <div className="flex items-center space-x-1">
                 <Bell className="w-4 h-4 text-gray-400" />
                 <Badge
-                  variant="destructive"
-                  className="w-5 h-5 rounded-full p-0 flex items-center justify-center text-xs"
+                  
+                  className="w-5 h-5 rounded-full bg-gray-100 text-black p-0 flex items-center justify-center text-xs"
                 >
                   3
                 </Badge>
@@ -169,7 +170,7 @@ const AppSidebar = () => {
                   <SidebarMenuButton asChild>
                     <NavLink to={item.url} end className={getNavCls(item.url)}>
                       <item.icon className={`w-5 h-5 ${
-                        isRouteActive(item.url) ? "text-green-600" : "text-gray-500"
+                        isRouteActive(item.url) ? "text-white" : "text-gray-500"
                       }`} />
                       {!collapsed && <span>{item.title}</span>}
                     </NavLink>
@@ -195,7 +196,7 @@ const AppSidebar = () => {
                     <SidebarMenuButton asChild>
                       <NavLink to={item.url} className={getNavCls(item.url)}>
                         <item.icon className={`w-5 h-5 ${
-                          isRouteActive(item.url) ? "text-green-600" : "text-gray-500"
+                          isRouteActive(item.url) ? "text-white" : "text-gray-500"
                         }`} />
                         {!collapsed && <span>{item.title}</span>}
                       </NavLink>
@@ -221,7 +222,7 @@ const AppSidebar = () => {
                   <SidebarMenuButton asChild>
                     <NavLink to={item.url} className={getNavCls(item.url)}>
                       <item.icon className={`w-5 h-5 ${
-                        isRouteActive(item.url) ? "text-green-600" : "text-gray-500"
+                        isRouteActive(item.url) ? "text-white" : "text-gray-500"
                       }`} />
                       {!collapsed && <span>{item.title}</span>}
                     </NavLink>
@@ -238,31 +239,26 @@ const AppSidebar = () => {
             <div className="flex items-center space-x-3">
               <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
                 userRole === "admin"
-                  ? "bg-purple-100"
+                  ? "bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)]"
                   : userRole === "manager"
-                  ? "bg-blue-100"
-                  : "bg-green-100"
+                  ? "bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)]"
+                  : "bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)]"
               }`}>
                 <span className={`text-sm font-medium ${
                   userRole === "admin"
-                    ? "text-purple-700"
+                    ? "text-white"
                     : userRole === "manager"
-                    ? "text-blue-700"
-                    : "text-green-700"
+                    ? "text-white"
+                    : "text-white"
                 }`}>
-                  {userRole === "admin" ? "SA" : userRole === "manager" ? "BM" : "AK"}
+                  {user?.name ? user.name.split(' ').map(n => n[0]).join('').toUpperCase() : "U"}
                 </span>
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-900 truncate">
-                  {userRole === "admin" 
-                    ? "System Administrator" 
-                    : userRole === "manager" 
-                    ? "Branch Manager" 
-                    : "Ahmad Khan"
-                  }
+                  {user?.name || "User"}
                 </p>
-                <p className="text-xs text-gray-500 capitalize">{userRole}</p>
+                <p className="text-xs text-gray-500 capitalize">{user?.role || "Cashier"}</p>
               </div>
             </div>
             <div className="mt-2 text-xs text-gray-400">

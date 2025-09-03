@@ -114,8 +114,8 @@ const Dashboard = () => {
               key={index} 
               className={`shadow-soft border-2 cursor-pointer transition-all duration-300 hover:scale-105 ${
                 isActive 
-                  ? 'border-green-600 shadow-lg' 
-                  : 'border-gray-100 hover:border-gray-200'
+                  ? ' shadow-lg' 
+                  : ''
               }`}
               onClick={() => handleStatClick(stat.id)}
             >

@@ -96,7 +96,7 @@ const Settings = () => {
             <RefreshCw className="w-4 h-4 mr-2" />
             Sync Now
           </Button>
-          <Button variant="medical">
+          <Button className="text-white bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)] hover:opacity-90">
             <Save className="w-4 h-4 mr-2" />
             Save Changes
           </Button>

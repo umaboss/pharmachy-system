@@ -213,14 +213,14 @@ const Customers = () => {
           <h1 className="text-3xl font-bold text-foreground">Customer Management</h1>
           <p className="text-muted-foreground">Manage customer relationships and loyalty</p>
         </div>
-        <Button variant="medical">
+        <Button className="text-white bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)] hover:opacity-90">
           <Plus className="w-4 h-4 mr-2" />
           Add Customer
         </Button>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6"> 
         <Card className="shadow-soft border-0">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
@@ -233,17 +233,6 @@ const Customers = () => {
           </CardContent>
         </Card>
 
-        <Card className="shadow-soft border-0">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">VIP Customers</p>
-                <p className="text-2xl font-bold text-accent">{vipCustomers}</p>
-              </div>
-              <Star className="w-8 h-8 text-accent" />
-            </div>
-          </CardContent>
-        </Card>
 
         <Card className="shadow-soft border-0">
           <CardContent className="p-6">
@@ -291,7 +280,11 @@ const Customers = () => {
                   variant={selectedFilter === filter ? "default" : "outline"}
                   size="sm"
                   onClick={() => setSelectedFilter(filter)}
-                  className="capitalize"
+                  className={`capitalize ${
+                    selectedFilter === filter
+                      ? "text-white bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)]"
+                      : ""
+                  }`}
                 >
                   {filter}
                 </Button>
@@ -312,15 +305,6 @@ const Customers = () => {
                     <span className="text-lg font-semibold text-primary">
                       {customer.name.split(' ').map(n => n[0]).join('')}
                     </span>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-foreground">{customer.name}</h3>
-                    {customer.isVIP && (
-                      <Badge variant="outline" className="bg-accent/10 text-accent border-accent/20">
-                        <Star className="w-3 h-3 mr-1" />
-                        VIP
-                      </Badge>
-                    )}
                   </div>
                 </div>
                 <div className="flex space-x-1">
@@ -399,7 +383,7 @@ const Customers = () => {
             <User className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
             <h3 className="text-lg font-semibold text-foreground mb-2">No customers found</h3>
             <p className="text-muted-foreground mb-4">Try adjusting your search or filter criteria</p>
-            <Button variant="medical">
+            <Button className="text-white bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)] hover:opacity-90">
               <Plus className="w-4 h-4 mr-2" />
               Add First Customer
             </Button>

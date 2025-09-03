@@ -163,7 +163,7 @@ const AdminReports = () => {
             <Filter className="w-4 h-4 mr-2" />
             Custom Range
           </Button>
-          <Button className="bg-gradient-primary hover:opacity-90">
+          <Button className="text-white bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)] hover:opacity-90">
             <Download className="w-4 h-4 mr-2" />
             Export Report
           </Button>
@@ -182,9 +182,13 @@ const AdminReports = () => {
                 <Button
                   key={period.id}
                   variant={selectedPeriod === period.id ? "default" : "outline"}
+                  className={`w-full text-xs ${
+                    selectedPeriod === period.id
+                      ? "text-white bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)]"
+                      : ""
+                  }`}
                   size="sm"
                   onClick={() => setSelectedPeriod(period.id)}
-                  className="w-full text-xs"
                 >
                   {period.label}
                 </Button>
@@ -481,32 +485,7 @@ const AdminReports = () => {
         </CardContent>
       </Card>
 
-      {/* Quick Actions */}
-      <Card className="shadow-soft border-0">
-        <CardHeader>
-          <CardTitle>Report Actions</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Button variant="outline" className="h-20 flex-col space-y-2">
-              <Download className="w-6 h-6" />
-              <span>Export PDF</span>
-            </Button>
-            <Button variant="outline" className="h-20 flex-col space-y-2">
-              <FileText className="w-6 h-6" />
-              <span>Export Excel</span>
-            </Button>
-            <Button variant="outline" className="h-20 flex-col space-y-2">
-              <Target className="w-6 h-6" />
-              <span>Set Targets</span>
-            </Button>
-            <Button variant="outline" className="h-20 flex-col space-y-2">
-              <AlertTriangle className="w-6 h-6" />
-              <span>Alerts</span>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+  
     </div>
   );
 };

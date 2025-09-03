@@ -7,12 +7,12 @@ import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { 
-  ShoppingCart, 
-  Search, 
-  Scan, 
-  Plus, 
-  Minus, 
+import {
+  ShoppingCart,
+  Search,
+  Scan,
+  Plus,
+  Minus,
   Trash2,
   User,
   CreditCard,
@@ -259,7 +259,7 @@ const POSInterface = () => {
   };
 
   const addToCart = (product: Product, quantity: number, unitType: string) => {
-    const existingItem = cart.find(item => 
+    const existingItem = cart.find(item =>
       item.name === product.name && item.unitType === unitType
     );
 
@@ -268,7 +268,7 @@ const POSInterface = () => {
     } else {
       const unitPrice = unitType === "pack" ? product.price : product.price / product.unitsPerPack;
       const totalPrice = unitPrice * quantity;
-      
+
       setCart([...cart, {
         id: String(Date.now()),
         name: product.name,
@@ -288,9 +288,9 @@ const POSInterface = () => {
     if (newQuantity <= 0) {
       setCart(cart.filter(item => item.id !== id));
     } else {
-      setCart(cart.map(item => 
-        item.id === id ? { 
-          ...item, 
+      setCart(cart.map(item =>
+        item.id === id ? {
+          ...item,
           quantity: newQuantity,
           totalPrice: item.unitPrice * newQuantity
         } : item
@@ -366,10 +366,10 @@ const POSInterface = () => {
       cashier: "Dr. Ahmed Khan",
       receiptNumber: `RCP-${String(now.getFullYear())}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`
     };
-    
+
     setCurrentReceipt(receipt);
     setIsReceiptDialogOpen(true);
-    
+
     // Reset cart and form
     setCart([]);
     setSelectedCustomer(null);
@@ -398,10 +398,10 @@ const POSInterface = () => {
 
     // Add to customers list
     customers.push(customer);
-    
+
     // Set as selected customer
     setSelectedCustomer(customer);
-    
+
     // Reset form and close dialog
     setNewCustomer({
       name: "",
@@ -424,7 +424,7 @@ const POSInterface = () => {
   return (
     <div className="p-6 bg-background min-h-screen">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         {/* Product Search & Selection */}
         <Card className="lg:col-span-2 shadow-soft border-0">
           <CardHeader>
@@ -458,7 +458,10 @@ const POSInterface = () => {
                   variant={selectedCategory === category ? "default" : "outline"}
                   size="sm"
                   onClick={() => setSelectedCategory(category)}
-                  className="capitalize"
+                  className={`capitalize ${selectedCategory === category
+                      ? "text-white bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)]"
+                      : ""
+                    }`}
                 >
                   {category}
                 </Button>
@@ -482,10 +485,10 @@ const POSInterface = () => {
                           </div>
                         </div>
                         {product.requiresPrescription && (
-                          <Badge variant="destructive" className="text-xs">Rx Required</Badge>
+                          <Badge variant="secondary" className="text-xs">Rx Required</Badge>
                         )}
                       </div>
-                      
+
                       <div className="flex items-center justify-between">
                         <span className="text-lg font-bold text-primary">PKR {product.price}</span>
                         <Badge variant="outline" className="text-xs">
@@ -495,18 +498,18 @@ const POSInterface = () => {
 
                       <div className="space-y-2">
                         <div className="flex space-x-2">
-                          <Button 
-                            size="sm" 
-                            variant="outline" 
+                          <Button
+                            size="sm"
+                            variant="outline"
                             className="flex-1"
                             onClick={() => addToCart(product, 1, "pack")}
                           >
                             <Package className="w-4 h-4 mr-1" />
                             Pack
                           </Button>
-                          <Button 
-                            size="sm" 
-                            variant="outline" 
+                          <Button
+                            size="sm"
+                            variant="outline"
                             className="flex-1"
                             onClick={() => addToCart(product, 1, product.unitType)}
                           >
@@ -514,20 +517,20 @@ const POSInterface = () => {
                             <span className="ml-1">1 {product.unitType.slice(0, -1)}</span>
                           </Button>
                         </div>
-                        
+
                         <div className="flex space-x-2">
-                          <Button 
-                            size="sm" 
-                            variant="outline" 
+                          <Button
+                            size="sm"
+                            variant="outline"
                             className="flex-1"
                             onClick={() => addToCart(product, 5, product.unitType)}
                           >
                             {getUnitIcon(product.unitType)}
                             <span className="ml-1">5 {product.unitType}</span>
                           </Button>
-                          <Button 
-                            size="sm" 
-                            variant="outline" 
+                          <Button
+                            size="sm"
+                            variant="outline"
                             className="flex-1"
                             onClick={() => addToCart(product, 10, product.unitType)}
                           >
@@ -552,72 +555,72 @@ const POSInterface = () => {
                 <ShoppingCart className="w-5 h-5 text-primary" />
                 <span>Cart ({cart.length})</span>
               </div>
-              
-                             {/* Customer Selection */}
-               <div className="flex items-center space-x-2">
-                 <Dialog open={isCustomerDialogOpen} onOpenChange={setIsCustomerDialogOpen}>
-                   <DialogTrigger asChild>
-                     <Button variant="ghost" size="sm">
-                       <User className="w-4 h-4 mr-1" />
-                       {selectedCustomer ? selectedCustomer.name.split(' ')[0] : 'Customer'}
-                     </Button>
-                   </DialogTrigger>
-                   <DialogContent>
-                     <DialogHeader>
-                       <DialogTitle>Select Customer</DialogTitle>
-                     </DialogHeader>
-                     <div className="space-y-3 max-h-60 overflow-y-auto">
-                       {/* Add New Customer Button */}
-                       <div className="p-3 border-2 border-dashed border-primary/30 rounded-lg cursor-pointer hover:bg-primary/5 transition-colors"
-                            onClick={() => {
-                              setIsCustomerDialogOpen(false);
-                              setIsNewCustomerDialogOpen(true);
-                            }}>
-                         <div className="text-center">
-                           <Plus className="w-6 h-6 mx-auto text-primary mb-2" />
-                           <p className="font-medium text-primary">Add New Customer</p>
-                           <p className="text-xs text-muted-foreground">Create new customer profile</p>
-                         </div>
-                       </div>
-                       
-                       {/* Existing Customers */}
-                       {customers.map((customer) => (
-                         <div 
-                           key={customer.id} 
-                           className="p-3 border rounded-lg cursor-pointer hover:bg-muted/50"
-                           onClick={() => {
-                             setSelectedCustomer(customer);
-                             setIsCustomerDialogOpen(false);
-                           }}
-                         >
-                           <div className="flex items-center justify-between">
-                             <div>
-                               <h4 className="font-medium">{customer.name}</h4>
-                               <p className="text-sm text-muted-foreground">{customer.phone}</p>
-                             </div>
-                             {customer.isVIP && (
-                               <Badge variant="outline" className="bg-accent/10 text-accent">
-                                 VIP
-                               </Badge>
-                             )}
-                           </div>
-                         </div>
-                       ))}
-                     </div>
-                   </DialogContent>
-                 </Dialog>
-                 
-                 {selectedCustomer && (
-                   <Button 
-                     variant="ghost" 
-                     size="sm" 
-                     onClick={() => setSelectedCustomer(null)}
-                     className="text-destructive hover:text-destructive"
-                   >
-                     <X className="w-4 h-4" />
-                   </Button>
-                 )}
-               </div>
+
+              {/* Customer Selection */}
+              <div className="flex items-center space-x-2">
+                <Dialog open={isCustomerDialogOpen} onOpenChange={setIsCustomerDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button variant="ghost" size="sm">
+                      <User className="w-4 h-4 mr-1" />
+                      {selectedCustomer ? selectedCustomer.name.split(' ')[0] : 'Customer'}
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Select Customer</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-3 max-h-60 overflow-y-auto">
+                      {/* Add New Customer Button */}
+                      <div className="p-3 border-2 border-dashed border-[#1C623C]/30 rounded-lg cursor-pointer hover:bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)]/5 transition-colors"
+                        onClick={() => {
+                          setIsCustomerDialogOpen(false);
+                          setIsNewCustomerDialogOpen(true);
+                        }}>
+                        <div className="text-center">
+                          <Plus className="w-6 h-6 mx-auto text-[#1C623C] mb-2" />
+                          <p className="font-medium text-[#1C623C]">Add New Customer</p>
+                          <p className="text-xs text-muted-foreground">Create new customer profile</p>
+                        </div>
+                      </div>
+
+                      {/* Existing Customers */}
+                      {customers.map((customer) => (
+                        <div
+                          key={customer.id}
+                          className="p-3 border rounded-lg cursor-pointer hover:bg-muted/50"
+                          onClick={() => {
+                            setSelectedCustomer(customer);
+                            setIsCustomerDialogOpen(false);
+                          }}
+                        >
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <h4 className="font-medium">{customer.name}</h4>
+                              <p className="text-sm text-muted-foreground">{customer.phone}</p>
+                            </div>
+                            {customer.isVIP && (
+                              <Badge variant="outline" className="bg-accent/10 text-accent">
+                                VIP
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
+                {selectedCustomer && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setSelectedCustomer(null)}
+                    className="text-destructive hover:text-destructive"
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
+                )}
+              </div>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -674,7 +677,7 @@ const POSInterface = () => {
                       <Trash2 className="w-4 h-4" />
                     </Button>
                   </div>
-                  
+
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
                       <Button
@@ -701,7 +704,7 @@ const POSInterface = () => {
                   </div>
                 </div>
               ))}
-              
+
               {cart.length === 0 && (
                 <div className="text-center py-8 text-muted-foreground">
                   <ShoppingCart className="w-12 h-12 mx-auto mb-2 opacity-50" />
@@ -714,7 +717,7 @@ const POSInterface = () => {
             {cart.length > 0 && (
               <>
                 <Separator />
-                
+
                 {/* Totals */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
@@ -744,11 +747,10 @@ const POSInterface = () => {
                         <button
                           key={method.id}
                           onClick={() => setSelectedPayment(method.id as any)}
-                          className={`p-3 rounded-lg border text-center transition-all ${
-                            selectedPayment === method.id
-                              ? 'bg-primary text-primary-foreground border-primary'
+                          className={`p-3 rounded-lg border text-center transition-all ${selectedPayment === method.id
+                              ? 'text-white bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)] border-transparent'
                               : 'bg-card hover:bg-muted/50 border-border'
-                          }`}
+                            }`}
                         >
                           <IconComponent className="w-4 h-4 mx-auto mb-1" />
                           <span className="text-xs font-medium">{method.label}</span>
@@ -795,8 +797,8 @@ const POSInterface = () => {
                 )}
 
                 {/* Checkout Button */}
-                <Button 
-                  className="w-full h-12 bg-success hover:opacity-90 transition-opacity"
+                                <Button 
+                  className="w-full h-12 text-white bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)] hover:opacity-90 transition-opacity"
                   onClick={processPayment}
                   disabled={paymentStatus === 'processing'}
                 >
@@ -806,8 +808,8 @@ const POSInterface = () => {
 
                 {/* Generate Receipt Button */}
                 {paymentStatus === 'completed' && (
-                  <Button 
-                    className="w-full h-12 bg-success hover:opacity-90 transition-opacity"
+                                    <Button 
+                    className="w-full h-12 text-white bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)] hover:opacity-90 transition-opacity"
                     onClick={generateReceipt}
                   >
                     <Receipt className="w-5 h-5 mr-2" />
@@ -827,10 +829,10 @@ const POSInterface = () => {
             <DialogTitle className="flex items-center justify-between">
               <span>Pharmacy Receipt</span>
               <div className="flex space-x-2">
-                                 <Button variant="outline" size="sm" onClick={printReceipt}>
-                   <Printer className="w-4 h-4 mr-2" />
-                   Print
-                 </Button>
+                <Button variant="outline" size="sm" onClick={printReceipt}>
+                  <Printer className="w-4 h-4 mr-2" />
+                  Print
+                </Button>
                 <Button variant="outline" size="sm" onClick={downloadReceipt}>
                   <Download className="w-4 h-4 mr-2" />
                   Download
@@ -838,7 +840,7 @@ const POSInterface = () => {
               </div>
             </DialogTitle>
           </DialogHeader>
-          
+
           {currentReceipt && (
             <div className="space-y-6 print:p-6">
               {/* Receipt Header */}
@@ -930,89 +932,89 @@ const POSInterface = () => {
                 <p>Thank you for choosing MediBill Pulse Pharmacy!</p>
                 <p>Please keep this receipt for your records</p>
                 <p className="mt-2">
-                  <strong>Important:</strong> Follow dosage instructions carefully. 
+                  <strong>Important:</strong> Follow dosage instructions carefully.
                   Consult your doctor if you have any questions.
                 </p>
               </div>
             </div>
           )}
-                 </DialogContent>
-       </Dialog>
+        </DialogContent>
+      </Dialog>
 
-       {/* New Customer Dialog */}
-       <Dialog open={isNewCustomerDialogOpen} onOpenChange={setIsNewCustomerDialogOpen}>
-         <DialogContent className="max-w-md">
-           <DialogHeader>
-             <DialogTitle className="flex items-center space-x-2">
-               <Plus className="w-5 h-5 text-primary" />
-               <span>Add New Customer</span>
-             </DialogTitle>
-           </DialogHeader>
-           
-           <div className="space-y-4">
-             <div className="space-y-2">
-               <Label htmlFor="customerName">Customer Name *</Label>
-               <Input
-                 id="customerName"
-                 placeholder="Enter customer name"
-                 value={newCustomer.name}
-                 onChange={(e) => setNewCustomer({...newCustomer, name: e.target.value})}
-               />
-             </div>
+      {/* New Customer Dialog */}
+      <Dialog open={isNewCustomerDialogOpen} onOpenChange={setIsNewCustomerDialogOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center space-x-2">
+              <Plus className="w-5 h-5 text-primary" />
+              <span>Add New Customer</span>
+            </DialogTitle>
+          </DialogHeader>
 
-             <div className="space-y-2">
-               <Label htmlFor="customerPhone">Phone Number *</Label>
-               <Input
-                 id="customerPhone"
-                 placeholder="Enter phone number"
-                 value={newCustomer.phone}
-                 onChange={(e) => setNewCustomer({...newCustomer, phone: e.target.value})}
-               />
-             </div>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="customerName">Customer Name *</Label>
+              <Input
+                id="customerName"
+                placeholder="Enter customer name"
+                value={newCustomer.name}
+                onChange={(e) => setNewCustomer({ ...newCustomer, name: e.target.value })}
+              />
+            </div>
 
-             <div className="space-y-2">
-               <Label htmlFor="customerEmail">Email (Optional)</Label>
-               <Input
-                 id="customerEmail"
-                 type="email"
-                 placeholder="Enter email address"
-                 value={newCustomer.email}
-                 onChange={(e) => setNewCustomer({...newCustomer, email: e.target.value})}
-               />
-             </div>
+            <div className="space-y-2">
+              <Label htmlFor="customerPhone">Phone Number *</Label>
+              <Input
+                id="customerPhone"
+                placeholder="Enter phone number"
+                value={newCustomer.phone}
+                onChange={(e) => setNewCustomer({ ...newCustomer, phone: e.target.value })}
+              />
+            </div>
 
-             <div className="space-y-2">
-               <Label htmlFor="customerAddress">Address (Optional)</Label>
-               <Input
-                 id="customerAddress"
-                 placeholder="Enter address"
-                 value={newCustomer.address}
-                 onChange={(e) => setNewCustomer({...newCustomer, address: e.target.value})}
-               />
-             </div>
-           </div>
+            <div className="space-y-2">
+              <Label htmlFor="customerEmail">Email (Optional)</Label>
+              <Input
+                id="customerEmail"
+                type="email"
+                placeholder="Enter email address"
+                value={newCustomer.email}
+                onChange={(e) => setNewCustomer({ ...newCustomer, email: e.target.value })}
+              />
+            </div>
 
-           {/* Action Buttons */}
-           <div className="flex justify-end space-x-3 pt-6 border-t">
-             <Button 
-               variant="outline" 
-               onClick={() => setIsNewCustomerDialogOpen(false)}
-             >
-               <X className="w-4 h-4 mr-2" />
-               Cancel
-             </Button>
-             <Button 
-               onClick={addNewCustomer}
-               className="bg-gradient-primary hover:opacity-90"
-             >
-               <Plus className="w-4 h-4 mr-2" />
-               Add Customer
-             </Button>
-           </div>
-         </DialogContent>
-       </Dialog>
-     </div>
-   );
- };
+            <div className="space-y-2">
+              <Label htmlFor="customerAddress">Address (Optional)</Label>
+              <Input
+                id="customerAddress"
+                placeholder="Enter address"
+                value={newCustomer.address}
+                onChange={(e) => setNewCustomer({ ...newCustomer, address: e.target.value })}
+              />
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex justify-end space-x-3 pt-6 border-t">
+            <Button
+              variant="outline"
+              onClick={() => setIsNewCustomerDialogOpen(false)}
+            >
+              <X className="w-4 h-4 mr-2" />
+              Cancel
+            </Button>
+            <Button
+              onClick={addNewCustomer}
+              className="text-white bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)] hover:opacity-90"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Add Customer
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+};
 
 export default POSInterface;

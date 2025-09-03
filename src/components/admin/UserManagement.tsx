@@ -162,12 +162,6 @@ const UserManagement = () => {
 
   return (
     <div className="p-6 space-y-6 bg-background min-h-screen">
-      {/* Test Header */}
-      <div style={{ backgroundColor: 'yellow', color: 'black', padding: '20px', marginBottom: '20px' }}>
-        <h1>TEST: UserManagement Component is Loading!</h1>
-        <p>If you can see this yellow box, the component is working</p>
-      </div>
-
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -185,7 +179,7 @@ const UserManagement = () => {
         
           <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-gradient-primary hover:opacity-90">
+              <Button className="text-white bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)] hover:opacity-90">
                 <UserPlus className="w-4 h-4 mr-2" />
                 Create New User
               </Button>
@@ -269,7 +263,7 @@ const UserManagement = () => {
                 <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
                   Cancel
                 </Button>
-                <Button onClick={handleCreateUser}>
+                <Button className="text-white bg-[linear-gradient(135deg,#1C623C_0%,#247449_50%,#6EB469_100%)] hover:opacity-90" onClick={handleCreateUser}>
                   Create User
                 </Button>
               </DialogFooter>
